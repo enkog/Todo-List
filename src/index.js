@@ -9,6 +9,11 @@ const actions = new LocalStorageActions();
 const taskUtils = new TaskUtils(actions);
 const localTodos = actions.get();
 
+const completedTask = document.querySelector('.todo-footer');
+const addBtn = document.querySelector('.fa-level-down-alt');
+const addOnEnter = document.querySelector('.add-todo-input');
+
+
 // Edit description
 const editTodo = (ctx) => {
   const {
@@ -123,8 +128,7 @@ function displayTodo(arr, actions) {
 
 displayTodo(localTodos, actions);
 
-const addBtn = document.querySelector('.fa-level-down-alt');
-const addOnEnter = document.querySelector('.add-todo-input');
+
 
 const addTodo = () => {
   const description = addOnEnter.value;
@@ -151,7 +155,7 @@ addBtn.addEventListener('click', addTodo);
 addOnEnter.addEventListener('keyup', handleEnter);
 
 // Clear completed tasks
-const completedTask = document.querySelector('.todo-footer');
+
 
 completedTask.addEventListener('click', () => {
   taskUtils.clearCompleted();
