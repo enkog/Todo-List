@@ -7,6 +7,12 @@ const mock = jest.fn().mockImplementation(() => ({
   addTask(task) {
     tasks.push(task);
   },
+
+  editTask(desc, index) {
+    const currTask = tasks[index];
+    currTask.description = desc;
+  },
+
 }));
 
 export default mock;
