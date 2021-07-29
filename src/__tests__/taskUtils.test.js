@@ -48,3 +48,29 @@ describe('add exactly one <li> element to the list in the DOM', () => {
     expect(tasks[0].description).toEqual('Task 1');
   });
 });
+
+describe('remove exactly one <li> element to the list in the DOM', () => {
+  test('that one item was removed from the list', () => {
+    const taskUtil = new TaskUtils();
+    const taskDesc = document.querySelectorAll('#task-list li').textContent;
+    const currTask = taskUtil.getTasks().filter((task) => task.description === taskDesc);
+    taskUtil.deleteTask(currTask.index);
+
+    const tasks = taskUtil.getTasks();
+
+    displayTasks(tasks);
+
+    const ul = document.querySelector('ul');
+
+    if (ul) {
+      while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+      }
+    }
+
+    displayTasks(tasks);
+
+    const list = document.querySelectorAll('#task-list li');
+    expect(list).toHaveLength(0);
+  });
+});
