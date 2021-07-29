@@ -23,7 +23,9 @@ const mock = jest.fn().mockImplementation(() => ({
     const index = tasks.findIndex((task) => task.description === item.description);
     tasks.splice(index, 1, item);
   },
-
+  clearCompleted() {
+    tasks.filter((task) => task.completed === false);
+  },
 }));
 
 export default mock;
