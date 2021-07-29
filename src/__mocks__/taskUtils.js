@@ -7,12 +7,10 @@ const mock = jest.fn().mockImplementation(() => ({
   addTask(task) {
     tasks.push(task);
   },
-
   editTask(desc, index) {
     const currTask = tasks[index];
     currTask.description = desc;
   },
-
   deleteTask(index) {
     tasks.filter((todo, i) => i !== index);
     tasks.splice(index, 1);
@@ -21,7 +19,10 @@ const mock = jest.fn().mockImplementation(() => ({
       tasks[i].index = i + 1;
     }
   },
-
+  updateTask(item) {
+    const index = tasks.findIndex((task) => task.description === item.description);
+    tasks.splice(index, 1, item);
+  },
 
 }));
 
