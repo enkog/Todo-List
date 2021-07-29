@@ -1,4 +1,4 @@
-export default function handleDragAndDrop(arr, actions) {
+export default function handleDragAndDrop(arr, taskUtils) {
   const ul = document.querySelector('.task-ul');
   const draggables = ul.querySelectorAll('.draggable');
 
@@ -33,7 +33,7 @@ export default function handleDragAndDrop(arr, actions) {
     });
 
     // update localstorage
-    actions.updateAll(arr);
+    taskUtils.updateTasks(arr);
   };
 
   const sortArr = (arr) => arr.sort((a, b) => a.index - b.index);
