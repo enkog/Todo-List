@@ -7,9 +7,9 @@ const mock = jest.fn().mockImplementation(() => ({
   addTask(task) {
     tasks.push(task);
   },
-  editTask(desc, index) {
-    const currTask = tasks[index];
-    currTask.description = desc;
+  editTask(task) {
+    const index = task.index - 1;
+    tasks[index].description = task.description;
   },
   deleteTask(index) {
     tasks.filter((todo, i) => i !== index);

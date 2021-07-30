@@ -1,4 +1,5 @@
 import TaskUtils from '../taskUtils';
+import taskCompleteUtil from '../completed';
 
 jest.mock('../taskUtils');
 
@@ -49,10 +50,27 @@ describe('add exactly one <li> element to the list in the DOM', () => {
   });
 });
 
-describe('remove exactly one <li> element to the list in the DOM', () => {
+describe('editing task description', () => {
+  test('that the Task 1 is changed to Task 2', () => {
+    const taskUtil = new TaskUtils();
+
+    const currTask = { description: 'Task 2', completed: false, index: 1 };
+
+    taskUtil.editTask(currTask);
+
+    const tasks = taskUtil.getTasks();
+    const index = currTask.index - 1;
+    const editedTask = tasks[index];
+
+    expect(editedTask.description).toEqual('Task 2');
+  });
+});
+
+describe('remove exactly one <li> element from the list in the DOM', () => {
   test('that one item was removed from the list', () => {
     const taskUtil = new TaskUtils();
     const taskDesc = document.querySelectorAll('#task-list li').textContent;
+
     const currTask = taskUtil.getTasks().filter((task) => task.description === taskDesc);
     taskUtil.deleteTask(currTask.index);
 
