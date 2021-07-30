@@ -25,6 +25,7 @@ const displayTasks = (arr) => {
     checkBox.checked = e.completed;
 
     const label = document.createElement('label');
+    label.id = 'todo';
 
     label.appendChild(document.createTextNode(e.description));
     li.appendChild(checkBox);
@@ -43,6 +44,10 @@ describe('test dom manipulation', () => {
     const check = document.getElementById('check');
     console.log(check.checked)
     expect(check).not.toBeChecked();
+  });
+  test('that task 1 is the first todo', () => {
+    const todo = document.getElementById('todo');
+    expect(todo).toHaveTextContent('Task 1');
   });
 });
 
