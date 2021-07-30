@@ -67,6 +67,15 @@ describe('update an items completed status', () => {
   });
 });
 
+describe('clear completed task', () => {
+  test('that the completed task is cleared', () => {
+    const taskUtils = new TaskUtils();
+
+    const completedTask = taskUtils.clearCompleted();
+    expect(completedTask).toHaveLength(0);
+  });
+});
+
 describe('editing task description', () => {
   test('that the Task 1 is changed to Task 2', () => {
     const taskUtil = new TaskUtils();
