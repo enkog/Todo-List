@@ -50,11 +50,28 @@ describe('add exactly one <li> element to the list in the DOM', () => {
   });
 });
 
+describe('update an items completed status', () => {
+  test('that the task is completed', () => {
+    const taskUtils = new TaskUtils();
+    const li = document.querySelector('#task-list li');
+    const arr = taskUtils.getTasks();
+
+    const arrs = { li, arr, taskUtils };
+
+    taskCompleteUtil(arrs);
+
+    const updateArr = taskUtils.getTasks();
+    const task = updateArr.filter((a) => a.description === li.textContent);
+
+    expect(task[0].completed).toBeTruthy();
+  });
+});
+
 describe('editing task description', () => {
   test('that the Task 1 is changed to Task 2', () => {
     const taskUtil = new TaskUtils();
 
-    const currTask = { description: 'Task 2', completed: false, index: 1 };
+    const currTask = { description: 'Task 2', completed: true, index: 1 };
 
     taskUtil.editTask(currTask);
 

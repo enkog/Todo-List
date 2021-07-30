@@ -24,7 +24,7 @@ const mock = jest.fn().mockImplementation(() => ({
     tasks.splice(index, 1, item);
   },
   clearCompleted() {
-    tasks.filter((task) => task.completed === false);
+    return tasks.filter((task) => task.completed === false);
   },
 }));
 
