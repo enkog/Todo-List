@@ -1,5 +1,6 @@
 import TaskUtils from '../taskUtils';
 import {screen} from '@testing-library/jest-dom'
+import taskCompleteUtil from '../completed';
 
 jest.mock('../taskUtils');
 
@@ -73,10 +74,53 @@ describe('add exactly one <li> element to the list in the DOM', () => {
   });
 });
 
-describe('remove exactly one <li> element to the list in the DOM', () => {
+describe('update an items completed status', () => {
+  test('that the task is completed', () => {
+    const taskUtils = new TaskUtils();
+    const li = document.querySelector('#task-list li');
+    const arr = taskUtils.getTasks();
+
+    const arrs = { li, arr, taskUtils };
+
+    taskCompleteUtil(arrs);
+
+    const updateArr = taskUtils.getTasks();
+    const task = updateArr.filter((a) => a.description === li.textContent);
+
+    expect(task[0].completed).toBeTruthy();
+  });
+});
+
+describe('clear completed task', () => {
+  test('that the completed task is cleared', () => {
+    const taskUtils = new TaskUtils();
+
+    const completedTask = taskUtils.clearCompleted();
+    expect(completedTask).toHaveLength(0);
+  });
+});
+
+describe('editing task description', () => {
+  test('that the Task 1 is changed to Task 2', () => {
+    const taskUtil = new TaskUtils();
+
+    const currTask = { description: 'Task 2', completed: true, index: 1 };
+
+    taskUtil.editTask(currTask);
+
+    const tasks = taskUtil.getTasks();
+    const index = currTask.index - 1;
+    const editedTask = tasks[index];
+
+    expect(editedTask.description).toEqual('Task 2');
+  });
+});
+
+describe('remove exactly one <li> element from the list in the DOM', () => {
   test('that one item was removed from the list', () => {
     const taskUtil = new TaskUtils();
     const taskDesc = document.querySelectorAll('#task-list li').textContent;
+
     const currTask = taskUtil.getTasks().filter((task) => task.description === taskDesc);
     taskUtil.deleteTask(currTask.index);
 
