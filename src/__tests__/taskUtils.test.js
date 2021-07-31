@@ -1,12 +1,17 @@
 import TaskUtils from '../taskUtils';
+import {screen} from '@testing-library/jest-dom'
 
 jest.mock('../taskUtils');
 
 document.body.innerHTML = '<div>'
-+ ' <ul id="task-list">'
-+ '</ul>'
-+ '<button id="add-task" />'
-+ '</div>';
++  '<div class="add-todo">'
++  '<input type="text" placeholder="Add to your list..." data-testid="todo" value="hello world" id="add-todo-input">'
++  '<i class="fas fa-level-down-alt fa-rotate-90"></i>'
++  '</div>'
++  ' <ul id="task-list">'
++  '</ul>'
++  '<button id="add-task" />'
++  '</div>';
 
 const displayTasks = (arr) => {
   const ul = document.querySelector('ul');
@@ -16,9 +21,11 @@ const displayTasks = (arr) => {
     const checkBox = document.createElement('input');
     checkBox.setAttribute('type', 'checkbox');
     checkBox.className = 'check';
+    checkBox.id = 'check';
     checkBox.checked = e.completed;
 
     const label = document.createElement('label');
+    label.id = 'todo';
 
     label.appendChild(document.createTextNode(e.description));
     li.appendChild(checkBox);
@@ -26,6 +33,23 @@ const displayTasks = (arr) => {
     ul.appendChild(li);
   });
 };
+
+describe('test dom manipulation', () => {
+  test('that the input field has a value', () => {
+    const inputTodo = document.getElementById('add-todo-input');
+    console.log(inputTodo.value);
+    expect(inputTodo).toHaveValue('hello world');
+  });
+  test('that the task the task is completed', () => {
+    const check = document.getElementById('check');
+    console.log(check.checked)
+    expect(check).not.toBeChecked();
+  });
+  test('that task 1 is the first todo', () => {
+    const todo = document.getElementById('todo');
+    expect(todo).toHaveTextContent('Task 1');
+  });
+});
 
 describe('add exactly one <li> element to the list in the DOM', () => {
   const taskUtil = new TaskUtils();
