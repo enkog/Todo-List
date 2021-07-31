@@ -79,6 +79,7 @@ function displayTodo(arr, taskUtils) {
     deleteIcon.className = 'far fa-trash-alt hidden';
 
     const tasks = { li, arr, taskUtils };
+
     tickIcon.addEventListener('click', () => {
       taskComplete(tasks);
       tickIcon.classList.add('hidden');
