@@ -16,7 +16,6 @@ document.body.innerHTML = '<div>'
 + '<button id="add-task" />'
 + '</div>';
 
-
 const displayTasks = (arr) => {
   const ul = document.querySelector('ul');
   arr.forEach((e) => {
