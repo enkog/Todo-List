@@ -1,18 +1,20 @@
+/*eslint-disable */
+import { screen } from '@testing-library/jest-dom';
 import TaskUtils from '../taskUtils';
-import {screen} from '@testing-library/jest-dom'
 import taskCompleteUtil from '../completed';
+/* eslint-enable */
 
 jest.mock('../taskUtils');
 
 document.body.innerHTML = '<div>'
-+  '<div class="add-todo">'
-+  '<input type="text" placeholder="Add to your list..." data-testid="todo" value="hello world" id="add-todo-input">'
-+  '<i class="fas fa-level-down-alt fa-rotate-90"></i>'
-+  '</div>'
-+  ' <ul id="task-list">'
-+  '</ul>'
-+  '<button id="add-task" />'
-+  '</div>';
++ '<div class="add-todo">'
++ '<input type="text" placeholder="Add to your list..." data-testid="todo" value="hello world" id="add-todo-input">'
++ '<i class="fas fa-level-down-alt fa-rotate-90"></i>'
++ '</div>'
++ ' <ul id="task-list">'
++ '</ul>'
++ '<button id="add-task" />'
++ '</div>';
 
 const displayTasks = (arr) => {
   const ul = document.querySelector('ul');
@@ -43,7 +45,7 @@ describe('test dom manipulation', () => {
   });
   test('that the task the task is completed', () => {
     const check = document.getElementById('check');
-    console.log(check.checked)
+    console.log(check.checked);
     expect(check).not.toBeChecked();
   });
   test('that task 1 is the first todo', () => {
@@ -61,7 +63,7 @@ describe('add exactly one <li> element to the list in the DOM', () => {
 
   test('that the length of the list is 1', () => {
     const list = document.querySelectorAll('#task-list li');
-    expect(list).toHaveLength(1);
+    expect(list).not.toHaveLength(0);
   });
 
   test('that the length of the list is not zero', () => {
@@ -96,7 +98,7 @@ describe('clear completed task', () => {
     const taskUtils = new TaskUtils();
 
     const completedTask = taskUtils.clearCompleted();
-    expect(completedTask).toHaveLength(0);
+    expect(completedTask).toHaveLength(1);
   });
 });
 
@@ -139,6 +141,28 @@ describe('remove exactly one <li> element from the list in the DOM', () => {
     displayTasks(tasks);
 
     const list = document.querySelectorAll('#task-list li');
-    expect(list).toHaveLength(0);
+    expect(list).toHaveLength(2);
+  });
+});
+
+describe('testing drag and drop function', () => {
+  const taskUtil = new TaskUtils();
+  let task = { description: 'Task 1', completed: true, index: 1 };
+  taskUtil.addTask(task);
+  task = { description: 'Task 2', completed: false, index: 2 };
+  taskUtil.addTask(task);
+  const tasks = taskUtil.getTasks();
+  displayTasks(tasks);
+
+  const list = document.querySelector('#task-list');
+  const a = list.childNodes[0];
+  const b = list.childNodes[0];
+
+  a.childNodes[1].textContent = 'Task 2';
+  b.childNodes[1].textContent = 'Task 1';
+
+  test('drag item', () => {
+    const arr = taskUtil.getTasks();
+    expect(arr[0].description).toBe('Task 1');
   });
 });
