@@ -3,6 +3,7 @@ import { screen } from '@testing-library/jest-dom';
 import TaskUtils from '../taskUtils';
 import taskCompleteUtil from '../completed';
 /* eslint-enable */
+import {screen} from '@testing-library/jest-dom'
 
 jest.mock('../taskUtils');
 
@@ -15,6 +16,7 @@ document.body.innerHTML = '<div>'
 + '</ul>'
 + '<button id="add-task" />'
 + '</div>';
+
 
 const displayTasks = (arr) => {
   const ul = document.querySelector('ul');
@@ -45,7 +47,7 @@ describe('test dom manipulation', () => {
   });
   test('that the task the task is completed', () => {
     const check = document.getElementById('check');
-    console.log(check.checked);
+    console.log(check.checked)
     expect(check).not.toBeChecked();
   });
   test('that task 1 is the first todo', () => {
