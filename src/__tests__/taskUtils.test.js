@@ -40,12 +40,10 @@ const displayTasks = (arr) => {
 describe('test dom manipulation', () => {
   test('that the input field has a value', () => {
     const inputTodo = document.getElementById('add-todo-input');
-    console.log(inputTodo.value);
     expect(inputTodo).toHaveValue('hello world');
   });
   test('that the task the task is completed', () => {
     const check = document.getElementById('check');
-    console.log(check.checked);
     expect(check).not.toBeChecked();
   });
   test('that task 1 is the first todo', () => {
